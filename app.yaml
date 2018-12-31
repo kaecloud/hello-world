@@ -1,0 +1,34 @@
+appname: hello
+type: web
+
+builds:
+- name: hello
+
+service:
+  user: root
+  replicas: 2
+  labels:
+    - proctype=router
+
+  mountpoints:
+    - host: test.kae.com
+      path: /
+  ports:
+  - port: 80
+    targetPort: 8080
+
+  containers:
+  - name: hello-world
+    # image: registry.cn-hangzhou.aliyuncs.com/kae/hello:0.1.1
+    imagePullPolicy: Always
+    # args: ["xx", "xx"]
+    command: ['hello-world']
+
+    env:                     # environments
+      - ENVA=a
+    tty: false               # whether allocate tty
+    # workingDir: xxx          # working dir
+
+    ports:
+    - containerPort: 8080
+
